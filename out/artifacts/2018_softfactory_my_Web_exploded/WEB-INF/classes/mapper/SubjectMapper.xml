@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newer.dao.student.SubjectMapper">
+    <resultMap id="BaseResultMap" type="com.newer.pojo.student.Subject">
+        <id column="sub_id" property="subId" jdbcType="INTEGER"/>
+        <result column="sub_name" property="subName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    sub_id, sub_name
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.newer.pojo.student.SubjectExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from pub_subject
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from pub_subject
+        where sub_id = #{subId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pub_subject
+    where sub_id = #{subId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.newer.pojo.student.Subject">
+    insert into pub_subject (sub_id, sub_name)
+    values (#{subId,jdbcType=INTEGER}, #{subName,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.newer.pojo.student.Subject">
+        insert into pub_subject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="subId != null">
+                sub_id,
+            </if>
+            <if test="subName != null">
+                sub_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="subId != null">
+                #{subId,jdbcType=INTEGER},
+            </if>
+            <if test="subName != null">
+                #{subName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newer.pojo.student.Subject">
+        update pub_subject
+        <set>
+            <if test="subName != null">
+                sub_name = #{subName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where sub_id = #{subId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newer.pojo.student.Subject">
+    update pub_subject
+    set sub_name = #{subName,jdbcType=VARCHAR}
+    where sub_id = #{subId,jdbcType=INTEGER}
+  </update>
+
+
+    <!-- 科目批量 -->
+    <update id="deleteByIds">
+        delete from pub_subject where sub_id in
+        <foreach collection="array" index="index" item="intArr" open="("
+                 separator="," close=")">
+            #{intArr}
+        </foreach>
+    </update>
+</mapper>

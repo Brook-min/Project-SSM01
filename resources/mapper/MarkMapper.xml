@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newer.dao.student.MarkMapper">
+    <resultMap id="BaseResultMap" type="com.newer.pojo.student.Mark">
+        <id column="mark_id" property="markId" jdbcType="INTEGER"/>
+        <result column="stu_id" property="stuId" jdbcType="INTEGER"/>
+        <result column="sub_id" property="subId" jdbcType="INTEGER"/>
+        <result column="score" property="score" jdbcType="DECIMAL"/>
+        <!-- 添加的属性 -->
+        <association property="subject" column="sub_id"
+                     select="com.newer.dao.student.SubjectMapper.selectByPrimaryKey"/>
+        <association property="student" column="stu_id"
+                     select="com.newer.dao.student.StudentMapper.selectByPrimaryKey"></association>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    mark_id, stu_id, sub_id, score
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.newer.pojo.student.MarkExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from pub_mark
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from pub_mark
+        where mark_id = #{markId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pub_mark
+    where mark_id = #{markId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.newer.pojo.student.Mark">
+    insert into pub_mark (mark_id, stu_id, sub_id, 
+      score)
+    values (#{markId,jdbcType=INTEGER}, #{stuId,jdbcType=INTEGER}, #{subId,jdbcType=INTEGER}, 
+      #{score,jdbcType=DECIMAL})
+  </insert>
+    <insert id="insertSelective" parameterType="com.newer.pojo.student.Mark">
+        insert into pub_mark
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="markId != null">
+                mark_id,
+            </if>
+            <if test="stuId != null">
+                stu_id,
+            </if>
+            <if test="subId != null">
+                sub_id,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="markId != null">
+                #{markId,jdbcType=INTEGER},
+            </if>
+            <if test="stuId != null">
+                #{stuId,jdbcType=INTEGER},
+            </if>
+            <if test="subId != null">
+                #{subId,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newer.pojo.student.Mark">
+        update pub_mark
+        <set>
+            <if test="stuId != null">
+                stu_id = #{stuId,jdbcType=INTEGER},
+            </if>
+            <if test="subId != null">
+                sub_id = #{subId,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where mark_id = #{markId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newer.pojo.student.Mark">
+    update pub_mark
+    set stu_id = #{stuId,jdbcType=INTEGER},
+      sub_id = #{subId,jdbcType=INTEGER},
+      score = #{score,jdbcType=DECIMAL}
+    where mark_id = #{markId,jdbcType=INTEGER}
+  </update>
+
+    <!-- 提供按学号，姓名，科目组合查询 -->
+    <select id="selectSubjectsByDto" parameterType="com.newer.dto.MarkDto" resultMap="BaseResultMap">
+        select a.*,b.stu_name from pub_mark a inner join pub_student b on a.stu_id=b.stu_id
+        <where>
+            <if test="stuId!=null">
+                and stu_id=#{stuId}
+            </if>
+            <if test="stuName!=null and stuName!=''">
+                and stu_name like "%"#{stuName}"%"
+            </if>
+            <if test="subId!=null">
+                and a.sub=#{subId}
+            </if>
+        </where>
+
+        <if test="sort!=null and order!=null">
+            order by ${sort} ${order}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,4 @@
+#Mon Oct 08 12:02:54 CST 2018
+eclipse.preferences.version=1
+validator.Checked=WebRoot/static/plugins/js,WebRoot/static/plugins/js/bootstrap-tableExport/jspdf.min.js,WebRoot/test,WebRoot/static/iframe/lib,WebRoot/static/plugins/js/bootstrap-tableExport/xlsx.core.min.js
+validator.Unchecked=WebRoot/static/plugins/js/validate/bootstrapValidator.min.js,WebRoot/static/iframe/lib/nprogress,WebRoot/static/plugins/js/bootstrap-tableExport

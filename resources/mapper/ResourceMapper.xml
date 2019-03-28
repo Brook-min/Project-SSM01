@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newer.dao.sys.ResourceMapper">
+    <resultMap id="BaseResultMap" type="com.newer.pojo.sys.Resource">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="resourcecode" jdbcType="VARCHAR" property="resourcecode"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="seq" jdbcType="INTEGER" property="seq"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                    and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem"
+                                             open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria"
+                     separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                    and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem"
+                                             open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+		id, name, resourcecode, url, description, icon, pid, seq,
+		status, type,
+		createtime
+	</sql>
+    <select id="selectByExample" parameterType="com.newer.pojo.sys.examples.ResourceExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from tb_resource
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_resource
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tb_resource
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+    <delete id="deleteByExample" parameterType="com.newer.pojo.sys.examples.ResourceExample">
+        delete from tb_resource
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.newer.pojo.sys.Resource">
+		insert into tb_resource (id,
+		name, resourcecode,
+		url, description, icon,
+		pid, seq, status, type,
+		createtime)
+		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		#{resourcecode,jdbcType=VARCHAR},
+		#{url,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
+		#{pid,jdbcType=INTEGER}, #{seq,jdbcType=INTEGER},
+		#{status,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP})
+	</insert>
+    <insert id="insertSelective" parameterType="com.newer.pojo.sys.Resource">
+        insert into tb_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="resourcecode != null">
+                resourcecode,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="seq != null">
+                seq,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcecode != null">
+                #{resourcecode,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="seq != null">
+                #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.newer.pojo.sys.examples.ResourceExample"
+            resultType="java.lang.Long">
+        select count(*) from tb_resource
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update tb_resource
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.resourcecode != null">
+                resourcecode = #{record.resourcecode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.url != null">
+                url = #{record.url,jdbcType=VARCHAR},
+            </if>
+            <if test="record.description != null">
+                description = #{record.description,jdbcType=VARCHAR},
+            </if>
+            <if test="record.icon != null">
+                icon = #{record.icon,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pid != null">
+                pid = #{record.pid,jdbcType=INTEGER},
+            </if>
+            <if test="record.seq != null">
+                seq = #{record.seq,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createtime != null">
+                createtime = #{record.createtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update tb_resource
+        set id = #{record.id,jdbcType=INTEGER},
+        name =
+        #{record.name,jdbcType=VARCHAR},
+        resourcecode =
+        #{record.resourcecode,jdbcType=VARCHAR},
+        url =
+        #{record.url,jdbcType=VARCHAR},
+        description =
+        #{record.description,jdbcType=VARCHAR},
+        icon =
+        #{record.icon,jdbcType=VARCHAR},
+        pid = #{record.pid,jdbcType=INTEGER},
+        seq = #{record.seq,jdbcType=INTEGER},
+        status =
+        #{record.status,jdbcType=VARCHAR},
+        type =
+        #{record.type,jdbcType=VARCHAR},
+        createtime =
+        #{record.createtime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newer.pojo.sys.Resource">
+        update tb_resource
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcecode != null">
+                resourcecode = #{resourcecode,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="seq != null">
+                seq = #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newer.pojo.sys.Resource">
+		update tb_resource
+		set name = #{name,jdbcType=VARCHAR},
+		resourcecode =
+		#{resourcecode,jdbcType=VARCHAR},
+		url = #{url,jdbcType=VARCHAR},
+		description = #{description,jdbcType=VARCHAR},
+		icon =
+		#{icon,jdbcType=VARCHAR},
+		pid = #{pid,jdbcType=INTEGER},
+		seq =
+		#{seq,jdbcType=INTEGER},
+		status = #{status,jdbcType=VARCHAR},
+		type =
+		#{type,jdbcType=VARCHAR},
+		createtime = #{createtime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+    <!-- 查询出资源管理信息 -->
+    <select id="selectTreeGrid" resultMap="BaseResultMap"
+            parameterType="java.lang.Integer">
+		select distinct
+		t.*
+		from tb_resource t left outer join
+		tb_resource t1 on
+		t .pid=t1.id
+		order by t.seq
+	</select>
+
+    <!-- 查询用户所有资源 -->
+    <select id="selectResourcesList" resultType="java.lang.String">
+		select r.resourcecode
+		from
+		tb_user_role u
+		left join tb_role_resource rr on
+		u.roleid=rr.roleid
+		left
+		join tb_resource r on r.id=rr.resourceid
+		where
+		u.userid=#{userId} and
+		r.type=1
+	</select>
+
+    <!-- 查询资源下面是否有子部门 -->
+    <select id="selectResourceSonNode" resultType="java.lang.Integer">
+        select
+        id
+        from tb_resource where
+        pid in
+        <foreach collection="ids" item="id" open="(" close=")"
+                 separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 查询出左侧菜单栏 -->
+    <select id="selectMenu" parameterType="java.lang.Integer"
+            resultMap="BaseResultMap">
+		select DISTINCT r.* from tb_user_role ur
+		left join tb_role_resource rr on ur.roleid=rr.roleid
+		left join tb_resource r on rr.resourceid=r.id
+		where ur.userid=#{userId} and type &lt;&gt; 1 and status=0
+		order by r.seq asc
+	</select>
+
+</mapper>

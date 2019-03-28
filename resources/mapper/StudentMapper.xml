@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newer.dao.student.StudentMapper">
+    <resultMap id="BaseResultMap" type="com.newer.pojo.student.Student">
+        <id column="stu_id" property="stuId" jdbcType="INTEGER"/>
+        <result column="stu_name" property="stuName" jdbcType="VARCHAR"/>
+        <result column="stu_sex" property="stuSex" jdbcType="VARCHAR"/>
+        <result column="enrol_time" property="enrolTime" jdbcType="DATE"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="photo" property="photo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    stu_id, stu_name, stu_sex, enrol_time, email, photo
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.newer.pojo.student.StudentExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from pub_student
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from pub_student
+        where stu_id = #{stuId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pub_student
+    where stu_id = #{stuId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.newer.pojo.student.Student">
+    insert into pub_student (stu_id, stu_name, stu_sex, 
+      enrol_time, email, photo
+      )
+    values (#{stuId,jdbcType=INTEGER}, #{stuName,jdbcType=VARCHAR}, #{stuSex,jdbcType=VARCHAR}, 
+      #{enrolTime,jdbcType=DATE}, #{email,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.newer.pojo.student.Student">
+        insert into pub_student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stuId != null">
+                stu_id,
+            </if>
+            <if test="stuName != null">
+                stu_name,
+            </if>
+            <if test="stuSex != null">
+                stu_sex,
+            </if>
+            <if test="enrolTime != null">
+                enrol_time,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="photo != null">
+                photo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stuId != null">
+                #{stuId,jdbcType=INTEGER},
+            </if>
+            <if test="stuName != null">
+                #{stuName,jdbcType=VARCHAR},
+            </if>
+            <if test="stuSex != null">
+                #{stuSex,jdbcType=VARCHAR},
+            </if>
+            <if test="enrolTime != null">
+                #{enrolTime,jdbcType=DATE},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                #{photo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newer.pojo.student.Student">
+        update pub_student
+        <set>
+            <if test="stuName != null">
+                stu_name = #{stuName,jdbcType=VARCHAR},
+            </if>
+            <if test="stuSex != null">
+                stu_sex = #{stuSex,jdbcType=VARCHAR},
+            </if>
+            <if test="enrolTime != null">
+                enrol_time = #{enrolTime,jdbcType=DATE},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                photo = #{photo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where stu_id = #{stuId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newer.pojo.student.Student">
+    update pub_student
+    set stu_name = #{stuName,jdbcType=VARCHAR},
+      stu_sex = #{stuSex,jdbcType=VARCHAR},
+      enrol_time = #{enrolTime,jdbcType=DATE},
+      email = #{email,jdbcType=VARCHAR},
+      photo = #{photo,jdbcType=VARCHAR}
+    where stu_id = #{stuId,jdbcType=INTEGER}
+  </update>
+
+
+</mapper>

@@ -1,0 +1,170 @@
+create database `project-ssm01`;
+
+## 基础表
+CREATE TABLE tb_base (
+  id int auto_increment NOT NULL,
+  name varchar(100) DEFAULT NULL,
+  value varchar(100) DEFAULT NULL,
+  pid int DEFAULT NULL,
+  description varchar(1000) DEFAULT NULL,
+  createtime datetime ,
+  deletestatus varchar(100) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO tb_base VALUES ('1', '学历', '高中', '0', '高中', now(), '0');
+INSERT INTO tb_base VALUES ('2', '学历', '初中', '0', '初中', now(), '0');
+INSERT INTO tb_base VALUES ('3', '学历', '职高', '0', '职高',now(), '0');
+INSERT INTO tb_base VALUES ('4', '学历', '中专', '0', '中专',now(), '0');
+INSERT INTO tb_base VALUES ('5', '学历', '大专', '0', '大专',now(), '0');
+INSERT INTO tb_base VALUES ('6', '学历', '其他', '0', '其他', now(), '0');
+INSERT INTO tb_base VALUES ('7', '专业', '软件专业', '0', '软件专业',now(), '0');
+INSERT INTO tb_base VALUES ('8', '专业', '平面设计专业', '0', '平面设计专业', now(), '0');
+INSERT INTO tb_base VALUES ('9', '专业', '测试专业', '0', '测试专业',now(), '0');
+
+ 
+
+## 权限表
+CREATE TABLE tb_resource (
+  id int auto_increment NOT NULL ,
+  name varchar(100) DEFAULT NULL,
+  resourcecode varchar(100) DEFAULT NULL,
+  url varchar(1000) DEFAULT NULL,
+  description varchar(1000) DEFAULT NULL,
+  icon varchar(100) DEFAULT NULL,
+  pid int DEFAULT NULL,
+  seq int DEFAULT NULL,
+  status varchar(100) DEFAULT NULL,
+  type varchar(100) DEFAULT NULL,
+  createtime datetime DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+
+insert into  tb_resource VALUES ('1', '系统管理', '', '', '', 'Hui-iconfont Hui-iconfont-system', null, '0', '0', '0', now());
+insert into  tb_resource VALUES ('2', '用户管理', 'user:manager', 'user/manager', '', 'Hui-iconfont Hui-iconfont-user2', '1', '0', '0', '2', now());
+insert into  tb_resource VALUES ('3', '增加', 'user:add', 'user/add', '用户添加', 'Hui-iconfont Hui-iconfont-add', '2', '0', '0', '1', now());
+insert into  tb_resource VALUES ('4', '删除', 'user:delete', 'user/delete', '用户删除', 'Hui-iconfont Hui-iconfont-del3', '2', '0', '0', '1', now());
+insert into  tb_resource VALUES ('5', '修改', 'user:updatetime', 'user/updatetime', '用户修改', 'Hui-iconfont Hui-iconfont-edit', '2', '0', '0', '1', now());
+insert into  tb_resource VALUES ('6', '查看', 'user:select', 'user/select', '用户查看', 'Hui-iconfont Hui-iconfont-search2', '2', '0', '0', '1', now());
+insert into  tb_resource VALUES ('7', '启用', 'user:startusing', 'user/startusing', '启用', 'Hui-iconfont Hui-iconfont-gouxuan', '2', '0', '0', '1', now());
+insert into  tb_resource VALUES ('8', '停用', 'user:blockup', 'user/blockup', '停用', 'Hui-iconfont Hui-iconfont-shenhe-tingyong', '2', '0', '0', '1', now());
+insert into  tb_resource VALUES ('9', '修改密码', 'user:changepwd', 'user/changepwd', '修改密码', 'Hui-iconfont Hui-iconfont-key', '2', '0', '0', '1', now());
+insert into  tb_resource VALUES ('10', '批量删除', 'user:batchdelete', 'user/batchdelete', '用户批量删除', 'Hui-iconfont Hui-iconfont-del3', '2', '0', '0', '1', now());
+insert into  tb_resource VALUES ('11', '角色管理', 'role:manager', 'role/manager', '', 'Hui-iconfont Hui-iconfont-root', '1', '1', '0', '2', now());
+insert into  tb_resource VALUES ('12', '增加', 'role:add', 'role/add', '角色添加', 'Hui-iconfont Hui-iconfont-add', '11', '0', '0', '1', now());
+insert into  tb_resource VALUES ('13', '删除', 'role:delete', 'role/delete', '角色删除', 'Hui-iconfont Hui-iconfont-del3', '11', '0', '0', '1', now());
+insert into  tb_resource VALUES ('14', '修改', 'role:updatetime', 'role/updatetime', '角色修改', 'Hui-iconfont Hui-iconfont-edit', '11', '0', '0', '1', now());
+insert into  tb_resource VALUES ('15', '查看', 'role:select', 'role/select', '角色查看', 'Hui-iconfont Hui-iconfont-search2', '11', '0', '0', '1', now());
+insert into  tb_resource VALUES ('16', '批量删除', 'role:batchdelete', 'role/batchdelete', '角色批量删除', 'Hui-iconfont Hui-iconfont-del3', '11', '0', '0', '1', now());
+insert into  tb_resource VALUES ('17', '授权', 'role:grant', 'role/grant', '授权', 'Hui-iconfont Hui-iconfont-user', '11', '0', '1', '1', now());
+insert into  tb_resource VALUES ('18', '资源管理', 'resource:manager', 'resource/manager', '', 'Hui-iconfont Hui-iconfont-tongji-bing', '1', '3', '0', '2', now());
+insert into  tb_resource VALUES ('19', '增加', 'resource:add', 'resource/add', '资源添加', 'Hui-iconfont Hui-iconfont-add', '18', '0', '0', '1',now());
+insert into  tb_resource VALUES ('20', '删除', 'resource:delete', 'resource/delete', '资源删除', 'Hui-iconfont Hui-iconfont-del3', '18', '0', '0', '1',now());
+insert into  tb_resource VALUES ('21', '修改', 'resource:updatetime', 'resource/updatetime', '资源修改', 'Hui-iconfont Hui-iconfont-edit', '18', '0', '0', '1', now());
+insert into  tb_resource VALUES ('22', '查看', 'resource:select', 'resource/select', '资源查看', 'Hui-iconfont Hui-iconfont-search2', '18', '0', '0', '1', now());
+insert into  tb_resource VALUES ('23', '启用', 'resource:startusing', 'resource/startusing', '启用', 'Hui-iconfont Hui-iconfont-gouxuan', '18', '0', '1', '1', now());
+insert into  tb_resource VALUES ('24', '停用', 'resource:blockup', 'resource/blockup', '停用', 'Hui-iconfont Hui-iconfont-shenhe-tingyong', '18', '0', '1', '1', now());
+commit;
+
+## -角色表## --
+CREATE TABLE tb_role (
+  id int auto_increment NOT NULL,
+  rolename varchar(100) DEFAULT NULL,
+  rolecode varchar(100) DEFAULT NULL,
+  description varchar(1000) DEFAULT NULL,
+  createtime datetime DEFAULT NULL,
+  deletestatus int DEFAULT NULL,
+  isdefault int DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO tb_role VALUES ('1', '管理员', 'admin', '管理员', now(), '0', '1');
+
+
+## 角色权限关系表
+CREATE TABLE tb_role_resource (
+  id int auto_increment NOT NULL ,
+  roleid int DEFAULT NULL,
+  resourceid int DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+INSERT INTO tb_role_resource VALUES ('1', '1', '1');
+INSERT INTO tb_role_resource VALUES ('2', '1', '2');
+INSERT INTO tb_role_resource VALUES ('3', '1', '3');
+INSERT INTO tb_role_resource VALUES ('4', '1', '4');
+INSERT INTO tb_role_resource VALUES ('5', '1', '5');
+INSERT INTO tb_role_resource VALUES ('6', '1', '6');
+INSERT INTO tb_role_resource VALUES ('7', '1', '7');
+INSERT INTO tb_role_resource VALUES ('8', '1', '8');
+INSERT INTO tb_role_resource VALUES ('9', '1', '9');
+INSERT INTO tb_role_resource VALUES ('10', '1', '10');
+INSERT INTO tb_role_resource VALUES ('11', '1', '11');
+INSERT INTO tb_role_resource VALUES ('12', '1', '12');
+INSERT INTO tb_role_resource VALUES ('13', '1', '13');
+INSERT INTO tb_role_resource VALUES ('14', '1', '14');
+INSERT INTO tb_role_resource VALUES ('15', '1', '15');
+INSERT INTO tb_role_resource VALUES ('16', '1', '16');
+INSERT INTO tb_role_resource VALUES ('17', '1', '17');
+INSERT INTO tb_role_resource VALUES ('18', '1', '18');
+INSERT INTO tb_role_resource VALUES ('19', '1', '19');
+INSERT INTO tb_role_resource VALUES ('20', '1', '20');
+INSERT INTO tb_role_resource VALUES ('21', '1', '21');
+INSERT INTO tb_role_resource VALUES ('22', '1', '22');
+INSERT INTO tb_role_resource VALUES ('23', '1', '23');
+INSERT INTO tb_role_resource VALUES ('24', '1', '24'); 
+ 
+## ## ## ## -用户表## ## ## --
+
+CREATE TABLE tb_user (
+  id int auto_increment NOT NULL,
+  username varchar(100) DEFAULT NULL,
+  password varchar(100) DEFAULT NULL,
+  realname varchar(100) DEFAULT NULL,
+  salt varchar(100) DEFAULT NULL,
+  description varchar(100) DEFAULT NULL,
+  locked int DEFAULT NULL,
+  createtime datetime DEFAULT NULL,
+  deletestatus int DEFAULT NULL,
+  sex varchar(2) DEFAULT NULL,
+  age int DEFAULT NULL,
+  education varchar(100) DEFAULT NULL,
+  telephone varchar(100) DEFAULT NULL,
+  email varchar(100) DEFAULT NULL,
+  province varchar(100) DEFAULT NULL,
+  city varchar(100) DEFAULT NULL,
+  area varchar(100) DEFAULT NULL,
+  address varchar(100) DEFAULT NULL,
+  upno int DEFAULT NULL,
+  deptno int DEFAULT NULL,
+  PRIMARY KEY (id)
+) ;
+  
+INSERT INTO tb_user VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', 'e10adc3949ba59abbe56e057f20f883e', '管理员', '0', now(), '0', '男', '17', '博士', '16666366626', '3684255456@qq.com', '湖南省', '长沙市', '芙蓉区', '五一广场牛耳教育', null, '1');
+
+## -用户角色关系表
+CREATE TABLE tb_user_role (
+  id int auto_increment NOT NULL,
+  userid int DEFAULT NULL,
+  roleid int DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+ 
+INSERT INTO tb_user_role VALUES ('1', '1', '1');
+
+## -部门表
+CREATE TABLE tb_dept (
+  id int auto_increment NOT NULL,
+  deptname varchar(100) DEFAULT NULL,
+  description varchar(1000) DEFAULT NULL,
+  address varchar(100) DEFAULT NULL,
+  pid int DEFAULT NULL,
+  icon varchar(100) DEFAULT NULL,
+  createtime datetime DEFAULT NULL,
+  deletestatus int DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+ 
+INSERT INTO tb_dept VALUES ('1', '管理部', '公司管理', '湖南省长沙市', null, 'Hui-iconfont Hui-iconfont-system',now(), '0');
+INSERT INTO tb_dept VALUES ('2', '人事部', '招聘员工', '湖南省长沙市', '1', 'Hui-iconfont Hui-iconfont-user2', now(), '0');
+ 
