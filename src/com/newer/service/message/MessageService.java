@@ -23,4 +23,6 @@ public interface MessageService {
     public boolean batchDeleteMes(String ids);
 
     public boolean insertMes(Message message);
+
+    public String queryByCommand(String command);
 }

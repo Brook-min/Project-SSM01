@@ -36,7 +36,7 @@
           href="static/plugins/login/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed"
           href="static/plugins/login/ico/apple-touch-icon-57-precomposed.png">
-    <title>牛耳信息管理系统登录</title>
+    <title>SSM框架整合及权限</title>
     <style type="text/css">
         body {
             -webkit-user-select: none;

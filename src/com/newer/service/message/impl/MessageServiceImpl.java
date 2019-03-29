@@ -6,6 +6,7 @@ import com.newer.dao.message.MessageMapper;
 import com.newer.pojo.message.Message;
 import com.newer.pojo.message.MessageExample;
 import com.newer.service.message.MessageService;
+import com.newer.util.font.Iconst;
 import com.newer.util.sys.BootstrapDataTable;
 import com.newer.util.sys.IsNotNullUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,40 @@ public class MessageServiceImpl implements MessageService {
             b = true;
         }
         return b;
+    }
+
+    @Override
+    public String queryByCommand(String command) {
+        List<Message> messageList;
+
+        // 实例化student条件对象
+        MessageExample example = new MessageExample();
+
+        // 去重
+        example.setDistinct(true);
+
+        // 实例筛选对象
+        MessageExample.Criteria criteria1 = example.createCriteria();
+
+        if (command != null && !"".equals(command)) {
+            if (Iconst.HELP_COMMAND.equals(command)) {
+                messageList = messageMapper.selectByExample(example);
+                StringBuilder result = new StringBuilder();
+                for (int i = 0; i < messageList.size(); i++) {
+                    if (i != 0) {
+                        result.append("<br/>");
+                    }
+                    result.append("回复[" + messageList.get(i).getCommand() + "]可以查看" + messageList.get(i).getDescription());
+                }
+                return result.toString();
+            }
+            criteria1.andCommandEqualTo(command);
+            messageList = messageMapper.selectByExample(example);
+            if (messageList.size() > 0) {
+                return messageList.get(0).getContent();
+            }
+        }
+        return Iconst.NO_MATCHING_CONTENT;
     }
 
     @Override
